@@ -1,5 +1,5 @@
 
-
+require('dotenv').config(); //level 2 security with environment variables
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema ({
   password: String
 });
 
-const secret = "Thisisourlittlesecret."; //level 2 security
-userSchema.plugin(encrypt, {secret: secret , encryptedFields: ["password"]}); //level 2 security
+
+userSchema.plugin(encrypt, {secret: process.env.SECRET , encryptedFields: ["password"]}); //level 2 security with environment variable
 
 
 const User = new mongoose.model("User", userSchema);
