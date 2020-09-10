@@ -1,11 +1,15 @@
 
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const encrypt = require("mongoose-encryption");  //level 1 security
 
+
 const app = express();
+
+
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -18,6 +22,8 @@ const userSchema = new mongoose.Schema ({
   password: String
 });
 
+const secret = "Thisisourlittlesecret."; //level 2 security
+userSchema.plugin(encrypt, {secret: secret , encryptedFields: ["password"]}); //level 2 security
 
 
 const User = new mongoose.model("User", userSchema);
@@ -64,9 +70,6 @@ app.post("/login", function(req, res){
     }
   });
 });
-
-
-
 
 
 
